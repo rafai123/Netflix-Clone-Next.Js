@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Navbar from "./components/Navbar";
 import Billboard from "./components/Billboard";
+import MovieList from "./components/MovieList";
+import useMovies from "@/hooks/useMovies";
 
 // export async function getServerSideProps(context: NextPageContext) {
 //   const session = await getSession(context)
@@ -40,6 +42,7 @@ export default function Home() {
   }
 
   const {data : user} = useCurrentUser()
+  const {data: movies} = useMovies()
 
   return (
     (session && status === "authenticated") &&
@@ -47,6 +50,9 @@ export default function Home() {
       <Navbar />
       {/* <SignOutButtonHome /> */}
       <Billboard />
+      <div className="pb-40">
+        <MovieList title="Trending Now" data={movies} />
+      </div>
     </>
   );
 }
