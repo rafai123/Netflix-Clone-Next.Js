@@ -9,6 +9,7 @@ import { useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Navbar from "./components/Navbar";
+import Billboard from "./components/Billboard";
 
 // export async function getServerSideProps(context: NextPageContext) {
 //   const session = await getSession(context)
@@ -45,6 +46,7 @@ export default function Home() {
     <>
       <Navbar />
       {/* <SignOutButtonHome /> */}
+      <Billboard />
     </>
   );
 }
