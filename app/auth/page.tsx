@@ -4,9 +4,16 @@
 import { useCallback, useState } from "react";
 import Input from "../components/Input"
 import axios from "axios";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
+import { FaDiscord, FaGithub } from "react-icons/fa";
 
 
 const Auth = () => {
+
+    const router = useRouter()
+
     const [email, setEmail] = useState("")
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
@@ -17,6 +24,23 @@ const Auth = () => {
         setVariant(variant === "login" ? "signup" : "login")
     },[variant])
 
+    const login = useCallback(async () => {
+        try {
+            await signIn('credentials', {
+                email,
+                password,
+                redirect: false,
+                callbackUrl : '/'
+            })
+
+            router.push('/')
+
+        } catch (error) {
+            console.log(error)
+        }
+    }, [email, password, router])
+
+
     const register = useCallback(async () => {
         try {
             const response = await axios.post("/api/register", {
@@ -25,11 +49,12 @@ const Auth = () => {
                 userName
             })
 
+            login()
             console.log(response)
         } catch ( error ) {
             console.log(error)
         }
-    }, [email, userName, password])
+    }, [email, userName, password, login])
 
 
     return (
@@ -45,20 +70,20 @@ const Auth = () => {
                         </h2>
                         <div className="flex flex-col gap-4">
                             {variant === 'signup' && (
-                                <Input 
-                                    id="email" 
-                                    type="email" 
-                                    label="Email" 
-                                    onChange={(e:any) => setEmail(e.target.value)}
-                                    value={email}
-                                />
-                            )}
+                                    <Input 
+                                        id="name" 
+                                        type="text" 
+                                        label="Username" 
+                                        onChange={(e:any) => setUserName(e.target.value)}
+                                        value={userName}
+                                    />
+                                )}
                             <Input 
-                                id="name" 
-                                type="text" 
-                                label="Username" 
-                                onChange={(e:any) => setUserName(e.target.value)}
-                                value={userName}
+                                id="email" 
+                                type="email" 
+                                label="Email" 
+                                onChange={(e:any) => setEmail(e.target.value)}
+                                value={email}
                             />
                             <Input 
                                 id="password" 
@@ -67,7 +92,16 @@ const Auth = () => {
                                 onChange={(e:any) =>  setPassword(e.target.value)}
                                 value={password}
                             />
-                            <button onClick={register} className="text-white bg-red-600 rounded-md w-full mt-10 py-3 hover:bg-red-700 transition">
+                            <div className="flex gap-4 flex-row items-center justify-center mt-8">
+                                <div onClick={() => signIn('google', {callbackUrl: '/'})} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
+                                    <FcGoogle size={30} />
+                                </div>
+                                <div onClick={() => signIn('github', {callbackUrl: '/'})} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
+                                    <FaDiscord size={30} />
+                                </div>
+                                
+                            </div>
+                            <button onClick={(variant === "login") ? login : register} className="text-white bg-red-600 rounded-md w-full mt-10 py-3 hover:bg-red-700 transition">
                                 {variant === 'login' ? "Login" : "Sign Up"}
                             </button>
                             <p className="text-neutral-500 mt-12 ">
