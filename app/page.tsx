@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import Billboard from "./components/Billboard";
 import MovieList from "./components/MovieList";
 import useMovies from "@/hooks/useMovies";
+import useFavorites from "@/hooks/useFavorites";
 
 // export async function getServerSideProps(context: NextPageContext) {
 //   const session = await getSession(context)
@@ -42,7 +43,8 @@ export default function Home() {
   }
 
   const {data : user} = useCurrentUser()
-  const {data: movies} = useMovies()
+  const {data: movies = []} = useMovies()
+  const {data: favorites = []} = useFavorites()
 
   return (
     (session && status === "authenticated") &&
@@ -52,6 +54,7 @@ export default function Home() {
       <Billboard />
       <div className="pb-40">
         <MovieList title="Trending Now" data={movies} />
+        <MovieList title="MyList" data={favorites} />
       </div>
     </>
   );

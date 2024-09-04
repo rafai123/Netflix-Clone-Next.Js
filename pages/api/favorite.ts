@@ -1,37 +1,16 @@
+import serverAuth from "@/lib/serverAuth";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import prismadb from '@/lib/prismadb'
-import serverAuth from "@/lib/serverAuth";
 import { without } from "lodash";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    // if (req.method !== "GET") {
-    //     console.log("Method not allowed!")
-    //     return res.status(405).end()
-    // }
-
-
+export default async function (req: NextApiRequest, res: NextApiResponse) {
     
     try {
-
-        if (req.method === 'GET') {
-
-        
-        const { currentUser } = await serverAuth(req, res)
-
-        console.log("From movies.ts", currentUser)
-
-        const movies = await prismadb.movie.findMany()
-
-        return res.status(200).json(movies)
-        }
-
         if (req.method === "POST") {
             const { currentUser } = await serverAuth(req, res)
 
-            const { movieId } = req.body
-
-            console.log("Favorite.ts :", currentUser)
+            const {movieId} = req.body
 
             const existingMovie = await prismadb.movie.findUnique({
                 where: {
@@ -43,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 throw new Error("Invalid ID")
             }
 
-            const user = await prismadb.user.update({
+            const response = await prismadb.user.update({
                 where: {
                     email: currentUser.email || '',
                 },
@@ -53,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     }
                 }
             })
-            res.status(200).json(user)
+            res.status(200).json(response)
         }
 
         if (req.method === "DELETE") {
@@ -77,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             //     }
             // })
 
-            const newFavoriteMovie = without(currentUser.favoriteIds, movieId)
+            const newFavoriteMovie = without(currentUser?.favoriteIds, movieId)
 
             const updatedFavorite = await prismadb.user.update({
                 where: {
@@ -92,7 +71,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         
         return res.status(405).end()
-        
     } catch (error) {
         console.log(error)
         return res.status(400).end()

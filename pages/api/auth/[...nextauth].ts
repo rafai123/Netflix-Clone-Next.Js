@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions }  from "next-auth";
 import { compare } from "bcrypt";
 import prismadb from "../../../lib/prismadb";
 import Credentials from "next-auth/providers/credentials";
@@ -6,10 +6,9 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-// Ensure the Prisma client is assigned globally to avoid multiple instances in development
 const prisma = prismadb;
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -48,7 +47,6 @@ export default NextAuth({
                     throw new Error("Invalid email or password");
                 }
 
-                // Return the user object if authentication is successful
                 return user;
             },
         }),
@@ -67,12 +65,13 @@ export default NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async session({ session, token, user }) {
-            // Optional: Add custom session handling logic here if needed
             return session;
         },
         async signIn({ user, account, profile, email, credentials }) {
-            // Optional: Add custom sign-in handling logic here if needed
             return true;
         },
     },
-});
+};
+
+// Export the NextAuth function with the authOptions passed in
+export default NextAuth(authOptions);
