@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res:NextApiResponse) 
             console.log("post", req.body)
             const data = req.body
 
-            const session = await getServerSession(req, res, authOptions)
+            const session = await serverAuth(req, res)
 
             console.log("Session from testpost", session)
             

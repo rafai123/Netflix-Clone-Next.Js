@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { BsFillPlayFill } from "react-icons/bs"
 import FavoriteButton from "./FavoriteButton"
+import { useRouter } from "next/navigation"
 
 interface MovieCardProps {
     data: Record<string, any>
@@ -8,6 +9,7 @@ interface MovieCardProps {
 
 const MovieCard:FC<MovieCardProps> = ({ data }) => {
     console.log("movies : ", data)
+    const router = useRouter()
     return (
         <>
             <div className="group relative bg-zinc-900 col-span h-[12vw]">
@@ -92,7 +94,7 @@ const MovieCard:FC<MovieCardProps> = ({ data }) => {
                                 mr-2
                             "
                         >
-                            <BsFillPlayFill size={30} className="mx-auto"/>
+                            <BsFillPlayFill onClick={() => router.push(`/watch/${data?.id}`)} size={30} className="mx-auto"/>
                         </div>
 
                         <div>
@@ -105,10 +107,10 @@ const MovieCard:FC<MovieCardProps> = ({ data }) => {
                     </p>
 
                     <div className="flex mt-4 gap-2 items-center">
-                        <p className="text-white text-[10px] lg:text-sm ">{data.duration}</p>
+                        <p className="text-white text-[10px] lg:text-sm ">{data?.duration}</p>
                     </div>
                     <div className="flex mt-4 gap-2 items-center">
-                        <p className="text-white text-[10px] lg:text-sm ">{data.genre}</p>
+                        <p className="text-white text-[10px] lg:text-sm ">{data?.genre}</p>
                     </div>
                     </div>
 
