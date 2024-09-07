@@ -6,7 +6,7 @@ import authOptions from "./auth/[...nextauth]";
 export default async function handler(req: NextApiRequest, res:NextApiResponse) {
     try {
         if (req.method === "POST") {
-            console.log("post", req.body)
+            // console.log("post", req.body)
             const data = req.body
 
             const session = await serverAuth(req, res)

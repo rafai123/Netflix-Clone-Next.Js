@@ -6,7 +6,7 @@ const Billboard = () => {
 
     const billboardData = useBillboard()
 
-    console.log(billboardData)
+    // console.log(billboardData)
 
     return (
         <>

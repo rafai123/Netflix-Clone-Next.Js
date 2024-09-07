@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FaDiscord, FaGithub } from "react-icons/fa";
+import Image from "next/image";
 
 
 const Auth = () => {
@@ -30,10 +31,10 @@ const Auth = () => {
                 email,
                 password,
                 redirect: false,
-                callbackUrl : '/'
+                callbackUrl : '/profile'
             })
 
-            router.push('/')
+            router.push('/profile')
 
         } catch (error) {
             console.log(error)
@@ -50,7 +51,7 @@ const Auth = () => {
             })
 
             login()
-            console.log(response)
+            // console.log(response)
         } catch ( error ) {
             console.log(error)
         }
@@ -61,7 +62,7 @@ const Auth = () => {
         <div className="relative h-full w-full bg-[url('/images/Hero.svg')] bg-no-repeat bg-fixed bg-center bg-cover">
             <div className="bg-black w-full h-full lg:bg-opacity-55">
                 <nav className="px-12 py-5">
-                    <img src="/images/logo.png" alt="Netflix Logo" className="h-12" />
+                    <Image height={25} width={115} src="/images/logo.png" alt="Netflix Logo" className="h-12" />
                 </nav>
                 <div className="flex justify-center">
                     <div className=" bg-black self-center p-16 rounded-md bg-opacity-70 mt-2 w-full lg:w-2/5 lg:max-w-md">
@@ -93,10 +94,10 @@ const Auth = () => {
                                 value={password}
                             />
                             <div className="flex gap-4 flex-row items-center justify-center mt-8">
-                                <div onClick={() => signIn('google', {callbackUrl: '/'})} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
+                                <div onClick={() => signIn('google', {callbackUrl: '/profile'})} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
                                     <FcGoogle size={30} />
                                 </div>
-                                <div onClick={() => signIn('github', {callbackUrl: '/'})} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
+                                <div onClick={() => signIn('github', {callbackUrl: '/profile'})} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
                                     <FaDiscord size={30} />
                                 </div>
                                 

@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     duration: movie.duration
                 }
             })
-            console.log(movie)
+            // console.log(movie)
         } catch (e) {
             console.log(e)
             return res.status(405).end()

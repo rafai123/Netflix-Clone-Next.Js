@@ -3,6 +3,7 @@ import NavbarItem from "./NavbarItem"
 import MobileMenu from "./MobileMenu"
 import { useCallback, useEffect, useState } from "react"
 import AccountMenu from "./AccountMenu"
+import Image from "next/image"
 
 const TOP_OFFSET = 66
 
@@ -53,7 +54,7 @@ const Navbar = () => {
 
                     `}
                 >
-                    <img className="h-9 lg:h-12" src="/images/logo.png" alt="Netflix" />
+                    <Image className="h-9 lg:h-12" width={105} height={25} src="/images/logo.png" alt="Netflix" />
                     <div
                         className="
                             flex-row
@@ -84,7 +85,7 @@ const Navbar = () => {
                         </div>
                         <div onClick={toggleAccountMenu} className="flex items-center gap-2 cursor-pointer relative">
                             <div className="w-8 h-8 lg:w-11 lg:h-11 rounded-md overflow-hidden">
-                                <img src="/images/netflix_default_blue.png" alt="Profile" /> 
+                                <Image width={40} height={40} className="rounded-md" src="/images/netflix_default_blue.png" alt="Profile" /> 
                             </div>
                             <BsChevronDown className={`text-white transition ${(showAccountMenu) ? "rotate-180" : "rotate-0"} `} />
                             <AccountMenu visible={showAccountMenu} />

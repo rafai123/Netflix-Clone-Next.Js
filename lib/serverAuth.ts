@@ -50,14 +50,14 @@ const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
         // const session = await getSession({ req });
         const session = await getServerSession(req, res, authOptions);
 
-        console.log("Session Object:" , session)
+        // console.log("Session Object:" , session)
 
         if (!session?.user?.email) {
             console.log('Session is invalid or user is not signed in');
             throw new Error('Not signed in');
         }
 
-        console.log("Session found for email:", session.user.email);
+        // console.log("Session found for email:", session.user.email);
 
         const currentUser = await prismadb.user.findUnique({
             where: {

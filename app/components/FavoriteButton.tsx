@@ -20,7 +20,7 @@ const FavoriteButton:FC<FavoriteButtonProps> = ({movieId}) => {
         return list.includes(movieId)
     }, [currentUser, movieId])
 
-    console.log("isFavorite from FavoriteButton.tsx :", isFavorite)
+    // console.log("isFavorite from FavoriteButton.tsx :", isFavorite)
 
     const toggleFavorites = useCallback(async () => {
         let response

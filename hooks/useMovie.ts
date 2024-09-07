@@ -7,7 +7,7 @@ import useSWR from "swr"
 
 const useMovie = (id:string) => {
 
-    console.log("from useMovie", id)
+    // console.log("from useMovie", id)
     const {data, isLoading, error, mutate} = useSWR(`/api/movies/${id}`, fetcher, {
         revalidateIfStale: false,
         revalidateOnReconnect: false,

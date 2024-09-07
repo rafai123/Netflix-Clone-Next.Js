@@ -18,7 +18,7 @@ const MovieList:FC<MovieListProps> = ({
     }
 
     // const {data} = useMovies()
-    console.log("movieList : ",data)
+    // console.log("movieList : ",data)
 
     return (
         <>

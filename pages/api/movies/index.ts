@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         
         const { currentUser } = await serverAuth(req, res)
 
-        console.log("From movies.ts", currentUser)
+        // console.log("From movies.ts", currentUser)
 
         const movies = await prismadb.movie.findMany()
 
@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             const { movieId } = req.body
 
-            console.log("Favorite.ts :", currentUser)
+            // console.log("Favorite.ts :", currentUser)
 
             const existingMovie = await prismadb.movie.findUnique({
                 where: {

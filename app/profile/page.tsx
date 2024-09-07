@@ -15,7 +15,7 @@ const ProfilePage = () => {
 
     const {data: user} = useCurrentUser()
 
-    console.log("user: ", user)
+    // console.log("user: ", user)
 
 
     return (

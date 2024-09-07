@@ -8,7 +8,7 @@ interface MovieCardProps {
 }
 
 const MovieCard:FC<MovieCardProps> = ({ data }) => {
-    console.log("movies : ", data)
+    // console.log("movies : ", data)
     const router = useRouter()
     return (
         <>

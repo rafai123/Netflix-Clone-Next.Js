@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const { movieId } = req.query
 
-        console.log("movieId:", movieId)
+        // console.log("movieId:", movieId)
 
         if (typeof movieId !== 'string') {
             throw new Error("Invalid ID | typenot String")

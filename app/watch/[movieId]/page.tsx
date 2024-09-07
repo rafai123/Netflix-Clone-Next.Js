@@ -10,11 +10,11 @@ const WatchMovie = () => {
 
     const movieId = params?.movieId
 
-    console.log("movieId : ", movieId)
+    // console.log("movieId : ", movieId)
 
     const { data } = useMovie(movieId as string)
 
-    console.log(data)
+    // console.log(data)
 
     return (
         <>
