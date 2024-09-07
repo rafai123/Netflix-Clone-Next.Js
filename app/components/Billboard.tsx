@@ -11,7 +11,7 @@ const Billboard = () => {
 
     const handleOpenModal = useCallback(() => {
         openModal(billboardData?.data?.id)
-        console.log("billboardData?.data?.id :", billboardData?.data?.id)
+        // console.log("billboardData?.data?.id :", billboardData?.data?.id)
     }, [openModal, billboardData?.data?.id])
 
     // console.log(billboardData)

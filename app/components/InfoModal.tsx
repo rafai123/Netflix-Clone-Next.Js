@@ -17,7 +17,7 @@ const InfoModal: FC<InfoModalProps> = ({visible, onClose}) => {
 
     const { movieId } = useInfoModal()
 
-    console.log("movieId from InfoModal.tsx :", movieId)
+    // console.log("movieId from InfoModal.tsx :", movieId)
 
     const { data = {} } = useMovie(movieId as string)
 
