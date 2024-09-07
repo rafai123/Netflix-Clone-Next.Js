@@ -13,6 +13,8 @@ import Billboard from "./components/Billboard";
 import MovieList from "./components/MovieList";
 import useMovies from "@/hooks/useMovies";
 import useFavorites from "@/hooks/useFavorites";
+import InfoModal from "./components/InfoModal";
+import useInfoModal from "@/hooks/useInfoModal";
 
 // export async function getServerSideProps(context: NextPageContext) {
 //   const session = await getSession(context)
@@ -45,10 +47,12 @@ export default function Home() {
   const {data : user} = useCurrentUser()
   const {data: movies = []} = useMovies()
   const {data: favorites = []} = useFavorites()
+  const {isOpen, closeModal} = useInfoModal()
 
   return (
     (session && status === "authenticated") &&
     <>
+      <InfoModal visible={isOpen} onClose={closeModal} />
       <Navbar />
       {/* <SignOutButtonHome /> */}
       <Billboard />

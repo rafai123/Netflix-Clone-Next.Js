@@ -1,10 +1,18 @@
 import useBillboard from "@/hooks/useBillboard"
 import { AiOutlineInfo, AiOutlineInfoCircle } from "react-icons/ai"
 import PlayButton from "./PlayButton"
+import { useCallback } from "react"
+import useInfoModal from "@/hooks/useInfoModal"
 
 const Billboard = () => {
 
     const billboardData = useBillboard()
+    const { openModal } = useInfoModal()
+
+    const handleOpenModal = useCallback(() => {
+        openModal(billboardData?.data?.id)
+        console.log("billboardData?.data?.id :", billboardData?.data?.id)
+    }, [openModal, billboardData?.data?.id])
 
     // console.log(billboardData)
 
@@ -50,7 +58,7 @@ const Billboard = () => {
                     </p>
                     <div className="flex gap-3 items-center mt-3 md:mt-4 ">
                         <PlayButton movieId={billboardData.data?.id} />
-                        <button 
+                        <button  onClick={handleOpenModal}
                             className="
                                 text-white
                                 bg-white
@@ -66,7 +74,7 @@ const Billboard = () => {
                                 transition
                                 "
                         >
-                            <AiOutlineInfoCircle className="mr-1" />
+                            <AiOutlineInfoCircle className="mr-1"  />
                             More Info
                         </button>
                     </div>
