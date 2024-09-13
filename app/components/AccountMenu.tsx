@@ -16,7 +16,7 @@ const AccountMenu: FC<AccountMenuProps> = ({ visible }) => {
     }
 
     return (
-        <div className="bg-black w-56 absolute top-14 right-0 py-5 flex-col border-2 border-gray-800 flex">
+        <div className="bg-black w-56 absolute top-14 right-0 py-5 flex-col border-2 rounded border-gray-800 flex">
             <div className="flex flex-col gap-3">
                 <div className="px-3 group/item flex gap-3 items-center w-full">
                     <Image width={45} height={45} className="w-8 rounded-md" src="/images/netflix_default_blue.png" alt={`${session?.user?.name}`} />
