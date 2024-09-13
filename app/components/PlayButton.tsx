@@ -29,7 +29,7 @@ const PlayButton:FC<PlayButtonProps> = ({movieId}) => {
                     hover:bg-neutral-300
                 " 
                 onClick={()=> router.push(`/watch/${movieId}`)} >
-                <BsFillPlayFill size={25} />
+                <BsFillPlayFill className="size-5" />
                 Play
             </button>
         </>

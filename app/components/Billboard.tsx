@@ -1,5 +1,5 @@
 import useBillboard from "@/hooks/useBillboard"
-import { AiOutlineInfo, AiOutlineInfoCircle } from "react-icons/ai"
+import { AiOutlineInfo, AiOutlineInfoCircle, AiOutlineLoading3Quarters } from "react-icons/ai"
 import PlayButton from "./PlayButton"
 import { useCallback } from "react"
 import useInfoModal from "@/hooks/useInfoModal"
@@ -16,13 +16,23 @@ const Billboard = () => {
 
     // console.log(billboardData)
 
+    if (billboardData.isLoading) {
+        return (
+            <>
+                <div className="relative h-[40vh] lg:h-[56.25vw] flex items-center justify-cemter">
+                    <AiOutlineLoading3Quarters className="text-white text-5xl mx-auto animate-spin" />
+                </div>
+            </>
+        )
+    } 
+
     return (
         <>
-            <div className="relative h-[56.25vw]">
+            <div className="relative h-[40vh] md:h-[56.25vw]">
                 <video 
                     className="
                         w-full 
-                        h-[56.25vw] 
+                        h-full  lg:h-[56.25vw] 
                         object-cover 
                         brightness-[60%]
                     "
@@ -32,7 +42,7 @@ const Billboard = () => {
                     src={billboardData.data?.videoUrl}>
                     poster={billboardData.data?.thumbnailUrl}
                 </video>
-                <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
+                <div className="absolute top-[37%] md:top-[40%] ml-4 md:ml-16">
                     <p className="
                             text-white 
                             text-1xl 
@@ -47,7 +57,8 @@ const Billboard = () => {
                     </p>
                     <p className="
                         text-white 
-                        text-[8px]
+                        text-xs
+                        text-opacity-80
                         md:text-lg
                         mt-3 md:mt-8
                         w-[90%] md:w-[80%] lg:w-[50%]
@@ -56,7 +67,7 @@ const Billboard = () => {
                     >
                         {billboardData.data?.description}
                     </p>
-                    <div className="flex gap-3 items-center mt-3 md:mt-4 ">
+                    <div className="flex gap-3  items-center mt-3 md:mt-4 ">
                         <PlayButton movieId={billboardData.data?.id} />
                         <button  onClick={handleOpenModal}
                             className="
@@ -67,21 +78,21 @@ const Billboard = () => {
                                 px-1 md:px-4
                                 py-1 md:py-2
                                 w-auto
-                                font-semibold
+                                font-normal lg:font-semibold
                                 drop-shadow-xl
                                 flex
                                 items-center
                                 transition
                                 "
                         >
-                            <AiOutlineInfoCircle className="mr-1"  />
-                            More Info
+                            <AiOutlineInfoCircle className="mr-1 "  />
+                            <span className=" text-sm font-normal ">More Info</span>
                         </button>
                     </div>
                 </div>
             </div>
-
         </>
+    
     )
 }
 
