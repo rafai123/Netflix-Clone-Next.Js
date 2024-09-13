@@ -9,7 +9,13 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import Image from "next/image";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { set } from "lodash";
 
+interface isLoadignOauthProps {
+    google: boolean,
+    github: boolean
+}
 
 const Auth = () => {
 
@@ -21,11 +27,18 @@ const Auth = () => {
 
     const [variant, setVariant] = useState("login")
 
+    const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingOauth, setIsLoadingOauth] = useState({
+        google: false,
+        github: false
+    });
+
     const toogleVariant = useCallback(() => {
         setVariant(variant === "login" ? "signup" : "login")
     },[variant])
 
     const login = useCallback(async () => {
+        setIsLoading(true)
         try {
             await signIn('credentials', {
                 email,
@@ -39,10 +52,11 @@ const Auth = () => {
         } catch (error) {
             console.log(error)
         }
+        setIsLoading(false)
     }, [email, password, router])
 
-
     const register = useCallback(async () => {
+        setIsLoading(true)
         try {
             const response = await axios.post("/api/register", {
                 email,
@@ -55,6 +69,7 @@ const Auth = () => {
         } catch ( error ) {
             console.log(error)
         }
+        setIsLoading(false)
     }, [email, userName, password, login])
 
 
@@ -94,16 +109,19 @@ const Auth = () => {
                                 value={password}
                             />
                             <div className="flex gap-4 flex-row items-center justify-center mt-8">
-                                <div onClick={() => signIn('google', {callbackUrl: '/profile'})} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
-                                    <FcGoogle size={30} />
+                                <div onClick={() => {setIsLoadingOauth({google: true, github: false}) ; signIn('google', {callbackUrl: '/profile'})}} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
+                                    {isLoadingOauth.google ? <AiOutlineLoading3Quarters size={30} className="text-center animate-spin" /> : <FcGoogle size={30} />}
+                                    {/* <FcGoogle size={30} /> */}
                                 </div>
-                                <div onClick={() => signIn('github', {callbackUrl: '/profile'})} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
-                                    <FaDiscord size={30} />
+                                <div onClick={() => {setIsLoadingOauth({google: false, github: true}); signIn('github', {callbackUrl: '/profile'})}} className="bg-white h-10 w-10 rounded-full self-center  flex justify-center items-center cursor-pointer hover:opacity-80 transition">
+                                    {isLoadingOauth.github ? <AiOutlineLoading3Quarters size={30} className="text-center animate-spin" /> : <FaGithub size={30} />}
+                                    {/* <FaDiscord size={30} /> */}
                                 </div>
                                 
                             </div>
-                            <button onClick={(variant === "login") ? login : register} className="text-white bg-red-600 rounded-md w-full mt-10 py-3 hover:bg-red-700 transition">
-                                {variant === 'login' ? "Login" : "Sign Up"}
+                            <button onClick={(variant === "login") ? login : register} className="text-white flex items-center justify-center bg-red-600 rounded-md w-full mt-10 py-3 hover:bg-red-700 transition">
+                                { isLoading ? <AiOutlineLoading3Quarters size={30} className="text-center animate-spin" /> : variant === 'login' ? "Login" : "Sign Up"}
+                                {/* variant === 'login' ? "Login" : "Sign Up"} */}
                             </button>
                             <p className="text-neutral-500 mt-12 ">
                                 { variant ==='login' ? "First time using Netflix?" : "Already have an account?"}

@@ -14,10 +14,12 @@ const Navbar = () => {
     const [showBackground, setshowBackground] = useState(false)
 
     const toggleMobileMenu = useCallback(() => {
+        setShowAccountMenu(false)
         setShowMobileMenu(!showMobileMenu)
     }, [showMobileMenu])
 
     const toggleAccountMenu = () => {
+        setShowMobileMenu(false)
         setShowAccountMenu(!showAccountMenu)
     }
 
